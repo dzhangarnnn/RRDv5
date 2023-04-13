@@ -18,7 +18,7 @@ function Users() {
 			{userId ? (
 				edit ? (
 					edit === "edit" ? (
-						<EditUserPage />
+						<EditUserPage userId={userId} />
 					) : (
 						<Redirect to={`/users/${userId}`} />
 					)
@@ -55,7 +55,7 @@ function EditUserPage({ userId }) {
 				<Link to={`/users/${userId}`}>User Page {userId}</Link>
 			</div>
 			<div>
-				<Link to={`/users/${userId + 1}`}>Another User</Link>
+				<Link to={`/users/${Number(userId) + 1}`}>Another User</Link>
 			</div>
 			<div>
 				<Link to="/users">Users List Page</Link>
