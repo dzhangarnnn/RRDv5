@@ -11,19 +11,20 @@ function HomePage() {
 }
 
 function Users() {
-	const { userId, edit } = useParams();
-	console.log(userId);
+	const { userId, profileEdit } = useParams();
 	return (
 		<>
 			{userId ? (
-				edit ? (
-					edit === "edit" ? (
+				profileEdit ? (
+					profileEdit === "profile" ? (
+						<UserPage />
+					) : profileEdit === "edit" ? (
 						<EditUserPage userId={userId} />
 					) : (
-						<Redirect to={`/users/${userId}`} />
+						<Redirect to={`/users/${userId}/profile`} />
 					)
 				) : (
-					<UserPage userId={userId} />
+					<Redirect to={`/users/${userId}/profile`} />
 				)
 			) : (
 				<UsersListPage userId={userId} />
@@ -40,7 +41,7 @@ function UsersListPage() {
 			<ul>
 				{pagesIds.map((id) => (
 					<li key={id}>
-						<Link to={`/users/${id}`}>User Page {id}</Link>
+						<Link to={`/users/${id}/profile`}>User Page {id}</Link>
 					</li>
 				))}
 			</ul>
@@ -55,7 +56,7 @@ function EditUserPage({ userId }) {
 				<Link to={`/users/${userId}`}>User Page {userId}</Link>
 			</div>
 			<div>
-				<Link to={`/users/${Number(userId) + 1}`}>Another User</Link>
+				<Link to={`/users/${Number(userId) + 1}/profile`}>Another User</Link>
 			</div>
 			<div>
 				<Link to="/users">Users List Page</Link>
@@ -64,7 +65,8 @@ function EditUserPage({ userId }) {
 	);
 }
 
-function UserPage({ userId }) {
+function UserPage() {
+	const { userId } = useParams();
 	return (
 		<>
 			<div>
@@ -83,7 +85,7 @@ function App() {
 	return (
 		<div>
 			<Switch>
-				<Route path="/users/:userId?/:edit?" component={Users} />
+				<Route path="/users/:userId?/:profileEdit?" component={Users} />
 				<Route path="/" exact component={HomePage} />
 				<Redirect to="/" />
 			</Switch>
